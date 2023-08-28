@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myController">
+	<table ng-if="db">
+		<thead>
+			<tr>
+				<th></th>
+				<th ng-repeat="role in db.roles">{{role.name}}</th>
+				
+			</tr>
+		</thead>
+		<tbody ng-repeat="acc in db.accounts">
+			<tr>
+				<th>{{acc.username}}</th>
+				<th ng-repeat="role in db.roles">
+					<input type="checkbox" 
+					ng-checked="index_of(acc.username, role.id) >= 0"
+					ng-click="update(acc.username, role.id)">
+				</th>
+			</tr>
+			
+		</tbody>
+	</table>
+</body>
+<script type="authorize/roles.js"></script>
+</html>

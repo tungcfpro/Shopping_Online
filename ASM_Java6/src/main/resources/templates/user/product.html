@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	  th:fragment="dynamic(main)">
+<head>
+	<title>Product</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+	<link th:href="@{/assets/css/shopping-cart-app.css}" rel="stylesheet" />
+	<script th:src="@{/assets/js/shopping-cart-app.js}"></script>
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" th:href="@{/images/icons/favicon.png}"/>
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/iconic/css/material-design-iconic-font.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/fonts/linearicons-v1.0.0/icon-font.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/animate/animate.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/css-hamburgers/hamburgers.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/animsition/css/animsition.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/select2/select2.min.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/daterangepicker/daterangepicker.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/slick/slick.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/MagnificPopup/magnific-popup.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/vendor/perfect-scrollbar/perfect-scrollbar.css}">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+	<!--===============================================================================================-->
+</head>
+
+<body class="animsition" ng-app="app" ng-controller="cart-ctrl">
+	
+	<!-- Header -->
+	<header th:replace="user/index :: header"></header>
+
+	<!-- Cart -->
+	<div th:replace="user/index :: cart"></div>
+
+	
+	<!-- Product -->
+	<div class="bg0 m-t-23 p-b-140">
+		<div class="container">
+			<div class="flex-w flex-sb-m p-b-52">
+				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
+					<a th:each="c:${cates}"><a th:href="@{|/user/shop?cid=${c.id}|}">
+						<button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5">
+							[[${c.name}]]
+						</button>
+					</a>
+
+				</div>
+
+				<div class="flex-w flex-c-m m-tb-10">
+					<div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
+						<i class="icon-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
+						<i class="icon-close-filter cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+						Filter
+					</div>
+
+					<div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
+						<i class="icon-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-search"></i>
+						<i class="icon-close-search cl2 m-r-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
+						Search
+					</div>
+				</div>
+
+				<!-- Search product -->
+				<div class="dis-none panel-search w-full p-t-10 p-b-15">
+					<div class="bor8 dis-flex p-l-15">
+						<button class="size-113 flex-c-m fs-16 cl2 hov-cl1 trans-04">
+							<i class="zmdi zmdi-search"></i>
+						</button>
+
+						<input class="mtext-107 cl2 size-114 plh2 p-r-15" type="text" name="search-product" placeholder="Search">
+					</div>
+				</div>
+
+				<!-- Filter -->
+				<div class="dis-none panel-filter w-full p-t-10">
+					<div class="wrap-filter flex-w bg6 w-full p-lr-40 p-t-27 p-lr-15-sm">
+						<div class="filter-col1 p-r-15 p-b-27">
+							<div class="mtext-102 cl2 p-b-15">
+								Sort By
+							</div>
+
+							<ul>
+								<li class="p-b-6">
+									<a  th:href="@{/user/shop}" class="filter-link stext-106 trans-04">
+										Default
+									</a>
+								</li>
+
+								<li class="p-b-6">
+									<a th:href="@{/products/sort(order='asc')}" class="filter-link stext-106 trans-04">
+										Price: Low to High
+									</a>
+								</li>
+
+								<li class="p-b-6">
+									<a th:href="@{/products/sort(order='desc')}" class="filter-link stext-106 trans-04">
+										Price: High to Low
+									</a>
+								</li>
+							</ul>
+						</div>
+
+
+						<div class="filter-col2 p-r-15 p-b-27">
+							<form th:action="@{/price}" method="get">
+								<div class="mtext-102 cl2 p-b-15">
+									Price
+								</div>
+
+								<ul>
+									<li class="p-b-6">
+										<a th:href="@{/price(minPrice=null,maxPrice=null)}" class="filter-link stext-106 trans-04 filter-link-active">
+											All
+										</a>
+									</li>
+
+									<li class="p-b-6">
+										<a th:href="@{/price(minPrice=0,maxPrice=5000000)}" class="filter-link stext-106 trans-04">
+											Less than 5 million VND
+										</a>
+									</li>
+
+									<li class="p-b-6">
+										<a th:href="@{/price(minPrice=5000000,maxPrice=10000000)}" class="filter-link stext-106 trans-04">
+											From 5 million to 10 million VND
+										</a>
+									</li>
+
+									<li class="p-b-6">
+										<a th:href="@{/price(minPrice=10000000,maxPrice=15000000)}" class="filter-link stext-106 trans-04">
+											From 10 million to 15 million VND
+										</a>
+									</li>
+
+									<li class="p-b-6">
+										<a th:href="@{/price(minPrice=15000000,maxPrice=20000000)}" class="filter-link stext-106 trans-04">
+											From 15 million to 20 million VND
+										</a>
+									</li>
+
+									<li class="p-b-6">
+										<a th:href="@{/price(minPrice=20000000,maxPrice=2000000000)}" class="filter-link stext-106 trans-04">
+											More than 20 million VND
+										</a>
+									</li>
+								</ul>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row isotope-grid">
+				<div th:each="p:${items}" class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item women">
+					<!-- Block2 -->
+					<div class="block2">
+						<div class="block2-pic hov-img0">
+							<img th:src="${p.image}" alt="IMG-PRODUCT">
+
+							<a th:href="@{'detail/' + ${p.id}}" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
+								Quick View
+							</a>
+						</div>
+
+						<div class="block2-txt flex-w flex-t p-t-14">
+							<div class="block2-txt-child1 flex-col-l ">
+								<a th:text="${p.name}" th:href="@{'detail/' + ${p.id}}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+								</a>
+
+
+								<span th:text="${#numbers.formatDecimal(p.price, 0, 'POINT', 0, 'COMMA')} +'₫'" class="stext-105 cl3">₫</span>
+							</div>
+
+							<div class="block2-txt-child2 flex-r p-t-3">
+								<a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
+									<img class="icon-heart1 dis-block trans-04" src="/images/icons/icon-heart-01.png" alt="ICON">
+									<img class="icon-heart2 dis-block trans-04 ab-t-l" src="/images/icons/icon-heart-02.png" alt="ICON">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Load more -->
+			<div class="flex-c-m flex-w w-full p-t-45">
+
+				<div class="pagination justify-content-center">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<li th:if="${currentPage > 0}" class="page-item">
+								<a th:href="@{/user/shop(page=${currentPage - 1})}" class="page-link" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+
+							<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:class="${i == currentPage ? 'active' : ''}">
+								<a th:href="@{/user/shop(page=${i})}" class="page-link" th:text="${i + 1}"></a>
+							</li>
+
+							<li th:if="${currentPage < totalPages - 1}" class="page-item">
+								<a th:href="@{/user/shop(page=${currentPage + 1})}" class="page-link" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+		
+
+	<!-- Footer -->
+	<footer th:replace="user/index :: footer"></footer>
+
+
+	<!-- Back to top -->
+	<div th:replace="user/index :: backtop"></div>
+
+	<!-- Modal1 -->
+
+
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/jquery/jquery-3.2.1.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/animsition/js/animsition.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/bootstrap/js/popper.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/select2/select2.min.js}"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/daterangepicker/moment.min.js}"></script>
+	<script th:src="@{/vendor/daterangepicker/daterangepicker.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/slick/slick.min.js}"></script>
+	<script th:src="@{/js/slick-custom.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/parallax100/parallax100.js}"></script>
+	<script>
+		$('.parallax100').parallax100();
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/MagnificPopup/jquery.magnific-popup.min.js}"></script>
+	<script>
+		$('.gallery-lb').each(function() { // the containers for all your galleries
+			$(this).magnificPopup({
+				delegate: 'a', // the selector for gallery item
+				type: 'image',
+				gallery: {
+					enabled:true
+				},
+				mainClass: 'mfp-fade'
+			});
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/isotope/isotope.pkgd.min.js}"></script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/sweetalert/sweetalert.min.js}"></script>
+	<script>
+		$('.js-addwish-b2, .js-addwish-detail').on('click', function(e){
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(function(){
+			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-b2');
+				$(this).off('click');
+			});
+		});
+
+		$('.js-addwish-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-detail');
+				$(this).off('click');
+			});
+		});
+
+		/*---------------------------------------------*/
+
+		$('.js-addcart-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to cart !", "success");
+			});
+		});
+
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/vendor/perfect-scrollbar/perfect-scrollbar.min.js}"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script th:src="@{/js/main.js}"></script>
+
+
+</body>
+</html>

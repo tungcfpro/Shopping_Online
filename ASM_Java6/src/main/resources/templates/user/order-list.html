@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script th:src="@{/assets/js/shopping-cart-app.js}"></script>
+    <script th:src="@{/assets/js/shopping-cart-ctrl.js}"></script>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body ng-app="app" ng-controller="cart-ctrl">
+    <main>
+        <div class="container mt-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading bg-primary text-white">YOUR PURCHASED ORDERS</div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Order No.</th>
+                            <th>Order Date</th>
+                            <th>Shipping Address</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="order, state: ${orders}">
+                            <td th:text="${state.index + 1}"></td>
+                            <td th:text="${order.id}"></td>
+                            <td th:text="${order.createDate}"></td>
+                            <td th:text="${order.address}"></td>
+                            <td>
+                                <a th:href="@{|/order/detail/${order.id}|}" class="btn btn-primary">
+                                    <span class="bi bi-search"></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <!-- Add Bootstrap JS script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/assets/js/shopping-cart-ctrl.js}"></script>
+</body>
+</html>
+ 
